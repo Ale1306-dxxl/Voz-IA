@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/style.css">
+    <!-- Librería para visualizar el personaje 3D -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+    <title>VozCheck IA</title>
+
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <div class="logo-icon">〰</div>
+            <span>VozCheck IA</span>
+        </div>
+
+        <nav>
+            <a href="#inicio">Inicio</a>
+            <a href="#analizar">Analizar</a>
+            <a href="#proposito">Propósito</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="inicio" class="hero">
+            <div>
+                <div class="badge">✦ IA al servicio de la verdad digital</div>
+
+                <h1>VozCheck IA</h1>
+
+                <p>
+                Pagina web para subir audio o imágenes y verificar si el contenido parece real
+                    o generado por inteligencia artificial. 
+
+                <div class="hero-actions">
+                    <a class="btn-primary" href="#analizar">Iniciar análisis →</a>
+                    <a href="#proposito" class="link-demo">Conocer el proyecto</a>
+                </div>
+            </div>
+
+            <div class="visual-area">
+                <div class="mascot-card">
+                    <div class="robot-status">Asistente visual</div>
+
+                    <model-viewer 
+                        id="robotMascota"
+                        src="https://modelviewer.dev/shared-assets/models/RobotExpressive.glb"
+                        alt="Personaje 3D temporal de VozCheck IA"
+                        camera-controls
+                        auto-rotate
+                        shadow-intensity="1"
+                        exposure="1"
+                        camera-orbit="0deg 75deg 105%"
+                        interaction-prompt="none"
+                        animation-name="Idle"
+                        autoplay>
+                    </model-viewer>
+
+                    <div class="robot-actions">
+                        <button type="button" class="robot-mini-btn" id="btnSaludar">👋 Saludar</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<section id="analizar" class="dashboard">
+
+    <!-- TARJETA 1: ENVÍO DE CONTENIDO -->
+    <div class="card">
+        <h3>Enviar contenido</h3>
+
+        <!-- Botón de micrófono: NO se envía a Flask todavía -->
+        <button type="button" class="option-button primary" onclick="activarMicrofono()">
+            <span class="big-icon">🎙️</span>
+            <div>
+                <strong>Activar micrófono</strong>
+                <span>El audio se analizará en vivo con Teachable Machine</span>
+            </div>
+        </button>
+
+        <!-- Formulario para imagen: SÍ se envía a Flask -->
+        <form class="analysis-form" action="/analizar-imagen" method="POST" enctype="multipart/form-data">
+
+            <label class="option-button">
+                <span class="big-icon">🖼️</span>
+                <div>
+                    <strong>Subir imagen</strong>
+                    <span>JPG, PNG o WEBP</span>
+                </div>
+
+                <input type="file" name="imagen" accept="image/*" hidden>
+            </label>
+
+            <div class="submit-area">
+                <button type="submit" class="btn-primary">Analizar imagen</button>
+            </div>
+
+        </form>
+
+        <div class="estado" id="estado">
+            Estado: selecciona una opción para iniciar.
+        </div>
+    </div>
+
+    <!-- TARJETA 2: RESULTADO -->
+    <div class="card">
+        <h3>Resultado del análisis</h3>
+
+        <div class="result-placeholder">
+            <div>
+                {% if resultado %}
+                    <span class="big-icon">✅</span>
+                    <strong>{{ resultado }}</strong>
+                    <p>El backend ya recibió la imagen enviada desde la interfaz.</p>
+                {% else %}
+                    <span class="big-icon">⌛</span>
+                    <strong>Resultado pendiente</strong>
+                    <p>Aquí aparecerá la respuesta del análisis.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="result-types">
+            <div class="result-type">Contenido real</div>
+            <div class="result-type">Contenido generado por IA</div>
+        </div>
+    </div>
+
+</section>
+        <section id="proposito" class="human-section">
+            <div>
+                <h2>Una IA pensada para cuidar la confianza</h2>
+                <p>
+                    VozCheck IA busca apoyar la verificación de contenido digital. La interfaz permite
+                    enviar audio o imágenes y está preparada para realizar el análisis con el modelo correspondiente.
+                </p>
+            </div>
+
+            <div class="quote">
+                “Verificar el contenido digital ayuda a tomar decisiones más seguras en un entorno donde la IA es cada vez más realista. ”
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 VozCheck IA · Proyecto educativo de inteligencia artificial, audio e imágenes</p>
+    </footer>
+    <script src="static/script.js"></script>
+
+ 
+</body>
+</html>
+
